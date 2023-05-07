@@ -1,0 +1,15 @@
+<ion-grid>
+  <ion-row class="ion-align-items-center">
+    <ion-col size="auto">
+      <ion-button (click)="dec()" [disabled]="quantity === 0">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">{{ quantity }}</ion-col>
+    <ion-col size="auto">
+      <ion-button (click)="inc()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

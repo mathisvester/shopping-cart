@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title> Cart </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card
+    *ngFor="let cartItem of cartItems$ | async"
+    class="ion-no-margin ion-margin-vertical"
+  >
+    <ion-card-header>
+      <ion-card-title>{{ cartItem.product.name }}</ion-card-title>
+      <ion-card-subtitle>{{
+        cartItem.product.price | currency : "EUR"
+      }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <app-quantity-selector
+      [quantity]="cartItem.quantity"
+      (quantityChange)="update(cartItem.product.id, $event)"
+    ></app-quantity-selector>
+  </ion-card>
+</ion-content>

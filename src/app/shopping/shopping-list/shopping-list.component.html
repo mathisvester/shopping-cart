@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Products</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="'./cart'"
+        >Cart
+        <ion-badge style="margin-left: 4px">{{
+          cartItemsCounter$ | async
+        }}</ion-badge></ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="filter">
+    <ion-select
+      aria-label="cateory"
+      placeholder="Select category"
+      formControlName="category"
+    >
+      <ion-select-option value="0">All</ion-select-option>
+      <ion-select-option
+        *ngFor="let category of categories$ | async"
+        [value]="category.id"
+        >{{ category.title }}</ion-select-option
+      >
+    </ion-select>
+  </form>
+
+  <app-shopping-list-item
+    *ngFor="let product of products$ | async"
+    [product]="product"
+    (add)="add($event)"
+    (quantityChange)="update(product.id, $event)"
+  ></app-shopping-list-item>
+</ion-content>
