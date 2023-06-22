@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import {
-  CartItem,
-  ShoppingCartService,
-} from '../_services/shopping-cart.service';
 import { Observable } from 'rxjs';
+import { CartItem } from '../_models/cart-item.model';
+import { ShoppingCartFacade } from '../_services/shopping-cart.facade';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,11 +10,11 @@ import { Observable } from 'rxjs';
 })
 export class ShoppingCartComponent {
   readonly cartItems$: Observable<CartItem[]> =
-    this.shoppingCartService.cartItems$;
+    this.shoppingCartFacade.cartItems$;
 
-  constructor(private readonly shoppingCartService: ShoppingCartService) {}
+  constructor(private readonly shoppingCartFacade: ShoppingCartFacade) {}
 
   update(productId: number, quantity: number) {
-    this.shoppingCartService.updateCartItemQuantity(productId, quantity);
+    this.shoppingCartFacade.updateCartItemQuantity(productId, quantity);
   }
 }

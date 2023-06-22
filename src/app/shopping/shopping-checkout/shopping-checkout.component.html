@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title> Checkout </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <dl *ngIf="cartItems$ | async as cartItems" class="ion-no-margin">
+    <ng-container *ngFor="let cartItem of cartItems">
+      <dt class="ion-padding-vertical">
+        {{ cartItem.quantity }}x {{ cartItem.product.name }}
+      </dt>
+      <dd class="ion-padding-vertical">
+        {{ cartItem.quantity * cartItem.product.price | currency : "EUR" }}
+      </dd>
+    </ng-container>
+    <dt class="ion-padding-vertical"><b>Total</b></dt>
+    <dd class="ion-padding-vertical">
+      <b>{{ totalCosts$ | async | currency : "EUR" }}</b>
+    </dd>
+  </dl>
+  <ion-button expand="block">Confirm</ion-button>
+</ion-content>

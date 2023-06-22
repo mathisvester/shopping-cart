@@ -7,6 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ShoppingListItemComponent } from './shopping-list/shopping-list-item/shopping-list-item.component';
+import { ShoppingCheckoutComponent } from './shopping-checkout/shopping-checkout.component';
+import { StoreModule } from '@ngrx/store';
+import { cartFeature } from './+state/cart/cart.reducer';
 
 const routes: Routes = [
   {
@@ -17,16 +20,26 @@ const routes: Routes = [
     path: 'cart',
     component: ShoppingCartComponent,
   },
+  {
+    path: 'checkout',
+    component: ShoppingCheckoutComponent,
+  },
 ];
 
 @NgModule({
-  declarations: [ShoppingListComponent, ShoppingCartComponent, ShoppingListItemComponent],
+  declarations: [
+    ShoppingListComponent,
+    ShoppingCartComponent,
+    ShoppingListItemComponent,
+    ShoppingCheckoutComponent,
+  ],
   imports: [
     RouterModule.forChild(routes),
     IonicModule,
     ReactiveFormsModule,
     CommonModule,
     SharedModule,
+    StoreModule.forFeature(cartFeature),
   ],
 })
 export class ShoppingModule {}

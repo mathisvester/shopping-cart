@@ -24,4 +24,10 @@
       (quantityChange)="update(cartItem.product.id, $event)"
     ></app-quantity-selector>
   </ion-card>
+
+  <p>
+    <ion-button [routerLink]="['../checkout']" expand="block"
+      >Checkout</ion-button
+    >
+  </p>
 </ion-content>

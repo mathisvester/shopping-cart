@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { map, Observable, startWith, switchMap } from 'rxjs';
 import { Product, ShoppingApiService } from '../_services/shopping-api.service';
-import { ShoppingCartService } from '../_services/shopping-cart.service';
 import {
   Category,
   CategoryApiService,
 } from '../_services/category-api.service';
 import { FormBuilder } from '@angular/forms';
+import { ShoppingCartFacade } from '../_services/shopping-cart.facade';
 
 @Component({
   selector: 'app-shopping-list',
@@ -39,20 +39,20 @@ export class ShoppingListComponent {
       )
     );
 
-  readonly cartItemsCounter$ = this.shoppingCartService.cartItemsCounter$;
+  readonly cartItemsCounter$ = this.shoppingCartFacade.cartItemsCounter$;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly shoppingApiService: ShoppingApiService,
     private readonly categoryApiService: CategoryApiService,
-    private readonly shoppingCartService: ShoppingCartService
+    private readonly shoppingCartFacade: ShoppingCartFacade
   ) {}
 
   add(product: Product) {
-    this.shoppingCartService.addCartItem(product);
+    this.shoppingCartFacade.addCartItem(product);
   }
 
   update(productId: number, quantity: number) {
-    this.shoppingCartService.updateCartItemQuantity(productId, quantity);
+    this.shoppingCartFacade.updateCartItemQuantity(productId, quantity);
   }
 }

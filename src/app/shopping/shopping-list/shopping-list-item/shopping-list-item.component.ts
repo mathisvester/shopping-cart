@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../../_services/shopping-api.service';
-import { ShoppingCartService } from '../../_services/shopping-cart.service';
 import { map, Observable, startWith, Subject } from 'rxjs';
+import { ShoppingCartFacade } from '../../_services/shopping-cart.facade';
 
 @Component({
   selector: 'app-shopping-list-item',
@@ -27,8 +27,8 @@ export class ShoppingListItemComponent {
   private readonly loadQuantity$: Subject<number> = new Subject<number>();
   private _product: Product | undefined;
 
-  constructor(private readonly shoppingCartService: ShoppingCartService) {
-    this.quantity$ = this.shoppingCartService.cartItems$.pipe(
+  constructor(private readonly shoppingCartFacade: ShoppingCartFacade) {
+    this.quantity$ = this.shoppingCartFacade.cartItems$.pipe(
       map((cartItems) => {
         const cartItem = cartItems.find(
           (cartItem) => cartItem.product.id === this.product?.id
