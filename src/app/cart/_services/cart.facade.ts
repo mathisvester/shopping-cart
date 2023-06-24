@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from './shopping-api.service';
+import { Product } from '../../products/_services/products-api.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Store } from '@ngrx/store';
 import { cartActions } from '../+state/cart/cart.actions';
@@ -13,7 +13,7 @@ import { CartItem } from '../_models/cart-item.model';
 @Injectable({
   providedIn: 'root',
 })
-export class ShoppingCartFacade {
+export class CartFacade {
   readonly cartItems$: Observable<CartItem[]> =
     this.store.select(selectCartItems);
   readonly cartItemsCounter$: Observable<number> = this.store.select(

@@ -1,14 +1,25 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '../../_services/shopping-api.service';
+import { Product } from '../_services/products-api.service';
 import { map, Observable, startWith, Subject } from 'rxjs';
-import { ShoppingCartFacade } from '../../_services/shopping-cart.facade';
+import { CartFacade } from '../../cart/_services/cart.facade';
+import { QuantitySelectorComponent } from '../../shared/quantity-selector/quantity-selector.component';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-shopping-list-item',
-  templateUrl: './shopping-list-item.component.html',
-  styleUrls: ['./shopping-list-item.component.scss'],
+  selector: 'app-product-list-item',
+  templateUrl: './product-list-item.component.html',
+  styleUrls: ['./product-list-item.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    IonicModule,
+    QuantitySelectorComponent,
+    AsyncPipe,
+    CurrencyPipe,
+  ],
 })
-export class ShoppingListItemComponent {
+export class ProductListItemComponent {
   @Input() set product(product: Product | undefined) {
     this._product = product;
 
@@ -27,8 +38,8 @@ export class ShoppingListItemComponent {
   private readonly loadQuantity$: Subject<number> = new Subject<number>();
   private _product: Product | undefined;
 
-  constructor(private readonly shoppingCartFacade: ShoppingCartFacade) {
-    this.quantity$ = this.shoppingCartFacade.cartItems$.pipe(
+  constructor(private readonly cartFacade: CartFacade) {
+    this.quantity$ = this.cartFacade.cartItems$.pipe(
       map((cartItems) => {
         const cartItem = cartItems.find(
           (cartItem) => cartItem.product.id === this.product?.id

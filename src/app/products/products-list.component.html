@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title> Products</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="'./cart'"
+      <ion-button [routerLink]="'/cart'"
         >Cart
         <ion-badge style="margin-left: 4px">{{
           cartItemsCounter$ | async
@@ -28,10 +28,10 @@
     </ion-select>
   </form>
 
-  <app-shopping-list-item
+  <app-product-list-item
     *ngFor="let product of products$ | async"
     [product]="product"
     (add)="add($event)"
     (quantityChange)="update(product.id, $event)"
-  ></app-shopping-list-item>
+  ></app-product-list-item>
 </ion-content>

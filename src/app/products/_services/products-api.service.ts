@@ -14,7 +14,7 @@ export interface Product {
 @Injectable({
   providedIn: 'root',
 })
-export class ShoppingApiService {
+export class ProductsApiService {
   private readonly apiUrl = '/api/products';
 
   constructor(private readonly httpClient: HttpClient) {}

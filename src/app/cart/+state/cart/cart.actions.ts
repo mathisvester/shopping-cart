@@ -2,7 +2,7 @@ import { createActionGroup, props } from '@ngrx/store';
 import { CartItem } from '../../_models/cart-item.model';
 
 export const cartActions = createActionGroup({
-  source: 'Shopping List',
+  source: 'Product List',
   events: {
     'Add item to cart': props<{ cartItem: CartItem }>(),
     'Remove item from cart': props<{ productId: number }>(),

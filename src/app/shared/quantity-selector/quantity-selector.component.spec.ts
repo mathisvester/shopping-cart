@@ -9,8 +9,7 @@ describe('QuantitySelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [QuantitySelectorComponent],
-      imports: [IonicModule.forRoot()],
+      imports: [IonicModule.forRoot(), QuantitySelectorComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(QuantitySelectorComponent);

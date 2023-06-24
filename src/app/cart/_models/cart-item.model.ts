@@ -1,4 +1,4 @@
-import { Product } from '../_services/shopping-api.service';
+import { Product } from '../../products/_services/products-api.service';
 
 export interface CartItem {
   id: string;
