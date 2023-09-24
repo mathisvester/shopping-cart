@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { CartComponent } from './cart.component';
+import { provideStore } from '@ngrx/store';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CartComponent', () => {
   let component: CartComponent;
@@ -9,7 +10,8 @@ describe('CartComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), CartComponent],
+      imports: [CartComponent, RouterTestingModule],
+      providers: [provideStore()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CartComponent);

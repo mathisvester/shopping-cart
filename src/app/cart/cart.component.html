@@ -1,33 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title> Cart </ion-title>
-  </ion-toolbar>
-</ion-header>
+<mat-toolbar>
+  <button mat-icon-button [routerLink]="['/products']" aria-label="Back">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Cart</span>
+</mat-toolbar>
 
-<ion-content class="ion-padding">
-  <ion-card
-    *ngFor="let cartItem of cartItems$ | async"
-    class="ion-no-margin ion-margin-vertical"
-  >
-    <ion-card-header>
-      <ion-card-title>{{ cartItem.product.name }}</ion-card-title>
-      <ion-card-subtitle>{{
-        cartItem.product.price | currency : "EUR"
-      }}</ion-card-subtitle>
-    </ion-card-header>
+<main>
+  <mat-card *ngFor="let cartItem of cartItems$ | async">
+    <mat-card-header>
+      <mat-card-title>{{ cartItem.product.name }}</mat-card-title>
+      <mat-card-subtitle>{{
+        cartItem.product.price | currency
+        }}</mat-card-subtitle>
+    </mat-card-header>
 
-    <app-quantity-selector
-      [quantity]="cartItem.quantity"
-      (quantityChange)="update(cartItem.product.id, $event)"
-    ></app-quantity-selector>
-  </ion-card>
+    <mat-card-actions>
+      <app-quantity-selector
+        [quantity]="cartItem.quantity"
+        (quantityChange)="update(cartItem.product.id, $event)"
+      ></app-quantity-selector>
+    </mat-card-actions>
+  </mat-card>
 
-  <p>
-    <ion-button [routerLink]="['../checkout']" expand="block"
-      >Checkout</ion-button
-    >
-  </p>
-</ion-content>
+  <button mat-button [routerLink]="['../checkout']">Checkout</button>
+</main>

@@ -1,26 +1,22 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title> Checkout </ion-title>
-  </ion-toolbar>
-</ion-header>
+<mat-toolbar>
+  <button mat-icon-button [routerLink]="['/cart']" aria-label="Back">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Checkout</span>
+</mat-toolbar>
 
-<ion-content class="ion-padding">
-  <dl *ngIf="cartItems$ | async as cartItems" class="ion-no-margin">
+<main>
+  <dl *ngIf="cartItems$ | async as cartItems">
     <ng-container *ngFor="let cartItem of cartItems">
-      <dt class="ion-padding-vertical">
-        {{ cartItem.quantity }}x {{ cartItem.product.name }}
-      </dt>
-      <dd class="ion-padding-vertical">
-        {{ cartItem.quantity * cartItem.product.price | currency : "EUR" }}
+      <dt>{{ cartItem.quantity }}x {{ cartItem.product.name }}</dt>
+      <dd>
+        {{ cartItem.quantity * cartItem.product.price | currency }}
       </dd>
     </ng-container>
-    <dt class="ion-padding-vertical"><b>Total</b></dt>
-    <dd class="ion-padding-vertical">
-      <b>{{ totalCosts$ | async | currency : "EUR" }}</b>
+    <dt><b>Total</b></dt>
+    <dd>
+      <b>{{ totalCosts$ | async | currency }}</b>
     </dd>
   </dl>
-  <ion-button expand="block">Confirm</ion-button>
-</ion-content>
+  <button mat-button>Confirm</button>
+</main>

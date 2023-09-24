@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-quantity-selector',
   templateUrl: './quantity-selector.component.html',
   styleUrls: ['./quantity-selector.component.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [MatButtonModule, MatIconModule],
 })
 export class QuantitySelectorComponent {
   @Input() quantity!: number;

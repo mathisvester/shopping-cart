@@ -1,31 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title> Products</ion-title>
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="'/cart'"
-        >Cart
-        <ion-badge style="margin-left: 4px">{{
-          cartItemsCounter$ | async
-        }}</ion-badge></ion-button
-      >
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<mat-toolbar>
+  <span>Products</span>
+  <button
+    style="margin-left: auto"
+    mat-button
+    aria-label="Cart"
+    [routerLink]="'/cart'"
+    [matBadge]="cartItemsCounter$ | async"
+  >
+    Cart
+  </button>
+</mat-toolbar>
 
-<ion-content class="ion-padding">
+<main>
   <form [formGroup]="filter">
-    <ion-select
-      aria-label="cateory"
-      placeholder="Select category"
-      formControlName="category"
-    >
-      <ion-select-option value="0">All</ion-select-option>
-      <ion-select-option
-        *ngFor="let category of categories$ | async"
-        [value]="category.id"
-        >{{ category.title }}</ion-select-option
-      >
-    </ion-select>
+    <mat-form-field>
+      <mat-label>Select category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option [value]="0">All</mat-option>
+        <mat-option
+          *ngFor="let category of categories$ | async"
+          [value]="category.id"
+        >
+          {{ category.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
 
   <app-product-list-item
@@ -34,4 +33,4 @@
     (add)="add($event)"
     (quantityChange)="update(product.id, $event)"
   ></app-product-list-item>
-</ion-content>
+</main>

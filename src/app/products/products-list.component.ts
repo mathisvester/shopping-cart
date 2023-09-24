@@ -3,11 +3,15 @@ import { map, Observable, startWith, switchMap } from 'rxjs';
 import { Product, ProductsApiService } from './_services/products-api.service';
 import { Category, CategoryApiService } from './_services/category-api.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { CartFacade } from '../cart/_services/cart.facade';
+import { CartFacade } from '../cart/_facades/cart.facade';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { NgFor, AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-products-list',
@@ -15,12 +19,16 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./products-list.component.scss'],
   standalone: true,
   imports: [
-    IonicModule,
     RouterLink,
     ReactiveFormsModule,
     NgFor,
     ProductListItemComponent,
     AsyncPipe,
+    MatToolbarModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
   ],
 })
 export class ProductsListComponent {
