@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
 import { QuantitySelectorComponent } from './quantity-selector.component';
 
 describe('QuantitySelectorComponent', () => {
@@ -9,7 +7,7 @@ describe('QuantitySelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), QuantitySelectorComponent],
+      imports: [QuantitySelectorComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(QuantitySelectorComponent);

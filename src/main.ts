@@ -2,7 +2,6 @@ import { AppComponent } from './app/app.component';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
-import { IonicModule } from '@ionic/angular';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
@@ -16,10 +15,11 @@ import {
 } from '@angular/router';
 import { APP_ROUTES } from './app/app.routes';
 import { cartFeature } from './app/cart/+state/cart/cart.reducer';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(IonicModule.forRoot()),
+    importProvidersFrom(BrowserAnimationsModule),
     provideHttpClient(withInterceptorsFromDi()),
     provideRouter(APP_ROUTES, withPreloading(PreloadAllModules)),
     provideStore(),

@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../_services/products-api.service';
 import { map, Observable, startWith, Subject } from 'rxjs';
-import { CartFacade } from '../../cart/_services/cart.facade';
+import { CartFacade } from '../../cart/_facades/cart.facade';
 import { QuantitySelectorComponent } from '../../shared/quantity-selector/quantity-selector.component';
-import { IonicModule } from '@ionic/angular';
 import { NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-list-item',
@@ -13,10 +14,11 @@ import { NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
   standalone: true,
   imports: [
     NgIf,
-    IonicModule,
     QuantitySelectorComponent,
     AsyncPipe,
     CurrencyPipe,
+    MatCardModule,
+    MatButtonModule,
   ],
 })
 export class ProductListItemComponent {

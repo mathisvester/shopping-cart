@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItem } from './_models/cart-item.model';
-import { CartFacade } from './_services/cart.facade';
+import { CartFacade } from './_facades/cart.facade';
 import { RouterLink } from '@angular/router';
 import { QuantitySelectorComponent } from '../shared/quantity-selector/quantity-selector.component';
 import { NgFor, AsyncPipe, CurrencyPipe } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-cart',
@@ -13,12 +16,15 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./cart.component.scss'],
   standalone: true,
   imports: [
-    IonicModule,
     NgFor,
     QuantitySelectorComponent,
     RouterLink,
     AsyncPipe,
     CurrencyPipe,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
   ],
 })
 export class CartComponent {
