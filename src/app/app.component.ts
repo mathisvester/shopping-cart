@@ -31,6 +31,4 @@ export class AppComponent {
   title = 'shopping-cart';
 
   readonly snackbarOpen$$: Subject<boolean> = new Subject<boolean>();
-
-  constructor() {}
 }
