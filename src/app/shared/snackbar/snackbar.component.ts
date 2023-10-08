@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatSnackBar,
@@ -13,7 +6,6 @@ import {
   MatSnackBarRef,
   TextOnlySnackBar,
 } from '@angular/material/snack-bar';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-snackbar',
@@ -22,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
   template: '',
   styles: [''],
 })
-export class SnackbarComponent implements OnDestroy {
+export class SnackbarComponent {
   @Input() set open(open: boolean | null) {
     this._open = open;
 
@@ -30,22 +22,17 @@ export class SnackbarComponent implements OnDestroy {
       this._snackbarRef = this._snackbar.open(this.message, this.action, {
         duration: 2000,
       });
+
+      this._snackbarRef.afterDismissed().subscribe(() => {
+        this._snackbarRef = undefined;
+        this._open = false;
+
+        setTimeout(() => {
+          this.openChange.emit(false);
+        }, 0);
+      });
     } else if (!!this._snackbarRef) {
       this._snackbar.dismiss();
-    }
-
-    if (!!this._snackbarRef) {
-      this._snackbarRef
-        .afterDismissed()
-        .pipe(takeUntil(this.onDestroy$$))
-        .subscribe(() => {
-          this._snackbarRef = undefined;
-          this._open = false;
-
-          setTimeout(() => {
-            this.openChange.emit(false);
-          });
-        });
     }
   }
 
@@ -61,11 +48,5 @@ export class SnackbarComponent implements OnDestroy {
   private _open: boolean | null = false;
   private _snackbarRef: MatSnackBarRef<TextOnlySnackBar> | undefined;
 
-  private readonly onDestroy$$: Subject<void> = new Subject<void>();
   private readonly _snackbar: MatSnackBar = inject(MatSnackBar);
-
-  ngOnDestroy() {
-    this.onDestroy$$.next();
-    this.onDestroy$$.complete();
-  }
 }
