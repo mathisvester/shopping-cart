@@ -4,24 +4,34 @@ import { HttpClient } from '@angular/common/http';
 
 export interface Product {
   id: number;
-  name: string;
-  description: string;
+  title: string;
   price: number;
-  category: number;
-  image?: string;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsApiService {
-  private readonly apiUrl = '/api/products';
-
   constructor(private readonly httpClient: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
     return this.httpClient
-      .get<Product[]>(this.apiUrl)
+      .get<Product[]>('https://fakestoreapi.com/products')
+      .pipe(catchError(() => of([])));
+  }
+
+  getProductsByCategory(categoryTitle: string): Observable<Product[]> {
+    return this.httpClient
+      .get<Product[]>(
+        `https://fakestoreapi.com/products/category/${categoryTitle}`
+      )
       .pipe(catchError(() => of([])));
   }
 }

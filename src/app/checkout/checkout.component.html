@@ -8,7 +8,7 @@
 <main>
   <dl *ngIf="cartItems$ | async as cartItems">
     <ng-container *ngFor="let cartItem of cartItems">
-      <dt>{{ cartItem.quantity }}x {{ cartItem.product.name }}</dt>
+      <dt>{{ cartItem.quantity }}x {{ cartItem.product.title }}</dt>
       <dd>
         {{ cartItem.quantity * cartItem.product.price | currency }}
       </dd>

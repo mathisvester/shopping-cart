@@ -64,8 +64,7 @@
               "browserTarget": "shopping-cart:build:production"
             },
             "development": {
-              "browserTarget": "shopping-cart:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "browserTarget": "shopping-cart:build:development"
             }
           },
           "defaultConfiguration": "development"

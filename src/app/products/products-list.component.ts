@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
-import { map, Observable, startWith, switchMap } from 'rxjs';
+import { iif, map, Observable, startWith, switchMap } from 'rxjs';
 import { Product, ProductsApiService } from './_services/products-api.service';
 import { Category, CategoryApiService } from './_services/category-api.service';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CartFacade } from '../cart/_facades/cart.facade';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { NgFor, AsyncPipe } from '@angular/common';
@@ -32,27 +37,21 @@ import { MatSelectModule } from '@angular/material/select';
   ],
 })
 export class ProductsListComponent {
-  readonly filter = this.fb.group({
-    category: [0],
-  });
+  readonly filter: FormGroup<{ category: FormControl<string> }> =
+    this.fb.nonNullable.group({
+      category: [''],
+    });
 
   readonly categories$: Observable<Category[]> =
     this.categoryApiService.getCategories();
   readonly products$: Observable<Product[]> =
     this.filter.controls.category.valueChanges.pipe(
       startWith(this.filter.controls.category.value),
-      map((categoryId) => Number(categoryId)),
-      switchMap((categoryId) =>
-        this.productsApiService.getProducts().pipe(
-          map((products) => {
-            if (categoryId) {
-              return products.filter(
-                (product) => product.category === categoryId
-              );
-            } else {
-              return products;
-            }
-          })
+      switchMap((selectedCategory) =>
+        iif(
+          () => selectedCategory.length === 0,
+          this.productsApiService.getProducts(),
+          this.productsApiService.getProductsByCategory(selectedCategory)
         )
       )
     );

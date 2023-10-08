@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export interface Category {
-  id: number;
   title: string;
 }
 
@@ -11,13 +10,16 @@ export interface Category {
   providedIn: 'root',
 })
 export class CategoryApiService {
-  private readonly apiUrl = '/api/categories';
-
   constructor(private readonly httpClient: HttpClient) {}
 
   getCategories(): Observable<Category[]> {
     return this.httpClient
-      .get<Category[]>(this.apiUrl)
-      .pipe(catchError(() => of([])));
+      .get<string[]>('https://fakestoreapi.com/products/categories')
+      .pipe(
+        map((categories) =>
+          categories.map((category) => ({ title: category } as Category))
+        ),
+        catchError(() => of([]))
+      );
   }
 }

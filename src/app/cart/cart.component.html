@@ -8,7 +8,7 @@
 <main>
   <mat-card *ngFor="let cartItem of cartItems$ | async">
     <mat-card-header>
-      <mat-card-title>{{ cartItem.product.name }}</mat-card-title>
+      <mat-card-title>{{ cartItem.product.title }}</mat-card-title>
       <mat-card-subtitle>{{
         cartItem.product.price | currency
         }}</mat-card-subtitle>

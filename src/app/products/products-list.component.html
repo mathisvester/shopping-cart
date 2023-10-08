@@ -16,10 +16,10 @@
     <mat-form-field>
       <mat-label>Select category</mat-label>
       <mat-select formControlName="category">
-        <mat-option [value]="0">All</mat-option>
+        <mat-option [value]="''">All</mat-option>
         <mat-option
           *ngFor="let category of categories$ | async"
-          [value]="category.id"
+          [value]="category.title"
         >
           {{ category.title }}
         </mat-option>
