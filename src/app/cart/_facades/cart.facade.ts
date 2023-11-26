@@ -1,26 +1,24 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, Injectable, Signal } from '@angular/core';
 import { Product } from '../../products/_services/products-api.service';
 import { v4 as uuidv4 } from 'uuid';
-import { Store } from '@ngrx/store';
-import { cartActions } from '../+state/cart/cart.actions';
-import {
-  selectCartItems,
-  selectCartItemsCounter,
-} from '../+state/cart/cart.selectors';
 import { CartItem } from '../_models/cart-item.model';
+import { CartStore } from '../+state/cart.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartFacade {
-  readonly cartItems$: Observable<CartItem[]> =
-    this.store.select(selectCartItems);
-  readonly cartItemsCounter$: Observable<number> = this.store.select(
-    selectCartItemsCounter,
-  );
+  readonly cartItems: Signal<CartItem[]>;
+  readonly cartItemsCounter: Signal<number>;
+  readonly cartItemsTotalCosts: Signal<number>;
 
-  constructor(private readonly store: Store) {}
+  private readonly store = inject(CartStore);
+
+  constructor() {
+    this.cartItems = this.store.cartItems;
+    this.cartItemsCounter = this.store.cartItemsCounter;
+    this.cartItemsTotalCosts = this.store.cartItemsTotalCosts;
+  }
 
   addCartItem(product: Product) {
     const cartItem: CartItem = {
@@ -29,20 +27,18 @@ export class CartFacade {
       quantity: 1,
     };
 
-    this.store.dispatch(cartActions.addItemToCart({ cartItem }));
+    this.store.addItem(cartItem);
   }
 
   updateCartItemQuantity(productId: number, quantity: number) {
     if (quantity === 0) {
       this.removeCartItem(productId);
     } else {
-      this.store.dispatch(
-        cartActions.updateProductQuantityForItemInCart({ productId, quantity }),
-      );
+      this.store.updateQuantity(productId, quantity);
     }
   }
 
   removeCartItem(productId: number) {
-    this.store.dispatch(cartActions.removeItemFromCart({ productId }));
+    this.store.removeItem(productId);
   }
 }

@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -53,21 +54,12 @@ export class ProductsListComponent {
     ),
   );
 
-  readonly cartItemsCounter$ = this.cartFacade.cartItemsCounter$;
+  readonly cartFacade: CartFacade = inject(CartFacade);
 
   constructor(
     private readonly productsApiService: ProductsApiService,
     private readonly categoryApiService: CategoryApiService,
-    private readonly cartFacade: CartFacade,
   ) {}
-
-  add(product: Product) {
-    this.cartFacade.addCartItem(product);
-  }
-
-  update(productId: number, quantity: number) {
-    this.cartFacade.updateCartItemQuantity(productId, quantity);
-  }
 
   categoryChange(category: string) {
     this.category.set(category);

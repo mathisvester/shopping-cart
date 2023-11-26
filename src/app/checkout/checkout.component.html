@@ -7,7 +7,7 @@
 
 <main>
   <dl>
-    <ng-container *ngFor="let cartItem of cartItems()">
+    <ng-container *ngFor="let cartItem of cartFacade.cartItems()">
       <dt>{{ cartItem.quantity }}x {{ cartItem.product.title }}</dt>
       <dd>
         {{ cartItem.quantity * cartItem.product.price | currency }}
@@ -15,7 +15,7 @@
     </ng-container>
     <dt><b>Total</b></dt>
     <dd>
-      <b>{{ totalCosts() | currency }}</b>
+      <b>{{ cartFacade.cartItemsTotalCosts() | currency }}</b>
     </dd>
   </dl>
   <button mat-button>Confirm</button>

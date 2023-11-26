@@ -6,7 +6,7 @@
 </mat-toolbar>
 
 <main>
-  <mat-card *ngFor="let cartItem of cartItems$ | async">
+  <mat-card *ngFor="let cartItem of cartFacade.cartItems()">
     <mat-card-header>
       <mat-card-title>{{ cartItem.product.title }}</mat-card-title>
       <mat-card-subtitle>{{
@@ -17,7 +17,9 @@
     <mat-card-actions>
       <app-quantity-selector
         [quantity]="cartItem.quantity"
-        (quantityChange)="update(cartItem.product.id, $event)"
+        (quantityChange)="
+          cartFacade.updateCartItemQuantity(cartItem.product.id, $event)
+        "
       />
     </mat-card-actions>
   </mat-card>

@@ -5,7 +5,7 @@
     mat-button
     aria-label="Cart"
     [routerLink]="'/cart'"
-    [matBadge]="cartItemsCounter$ | async"
+    [matBadge]="cartFacade.cartItemsCounter()"
   >
     Cart
   </button>
@@ -34,7 +34,7 @@
   <app-product-list-item
     *ngFor="let product of products$ | async"
     [product]="product"
-    (add)="add($event)"
-    (quantityChange)="update(product.id, $event)"
+    (add)="cartFacade.addCartItem($event)"
+    (quantityChange)="cartFacade.updateCartItemQuantity(product.id, $event)"
   />
 </main>

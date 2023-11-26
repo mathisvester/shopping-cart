@@ -12,6 +12,7 @@ import { QuantitySelectorComponent } from '../../shared/quantity-selector/quanti
 import { AsyncPipe, CurrencyPipe, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-product-list-item',
@@ -43,7 +44,7 @@ export class ProductListItemComponent {
   private _product: Product | undefined;
 
   constructor(private readonly cartFacade: CartFacade) {
-    this.quantity$ = this.cartFacade.cartItems$.pipe(
+    this.quantity$ = toObservable(this.cartFacade.cartItems).pipe(
       map((cartItems) => {
         const cartItem = cartItems.find(
           (cartItem) => cartItem.product.id === this.product?.id,
