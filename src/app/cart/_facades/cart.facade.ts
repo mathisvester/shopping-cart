@@ -17,7 +17,7 @@ export class CartFacade {
   readonly cartItems$: Observable<CartItem[]> =
     this.store.select(selectCartItems);
   readonly cartItemsCounter$: Observable<number> = this.store.select(
-    selectCartItemsCounter
+    selectCartItemsCounter,
   );
 
   constructor(private readonly store: Store) {}
@@ -37,7 +37,7 @@ export class CartFacade {
       this.removeCartItem(productId);
     } else {
       this.store.dispatch(
-        cartActions.updateProductQuantityForItemInCart({ productId, quantity })
+        cartActions.updateProductQuantityForItemInCart({ productId, quantity }),
       );
     }
   }

@@ -26,11 +26,11 @@ import { RouterLink } from '@angular/router';
 })
 export class CheckoutComponent {
   readonly cartItems$: Observable<CartItem[]> = this.cartFacade.cartItems$.pipe(
-    shareReplay({ refCount: true, bufferSize: 1 })
+    shareReplay({ refCount: true, bufferSize: 1 }),
   );
   readonly totalCosts$: Observable<number> = this.cartItems$.pipe(
     mergeAll(),
-    scan((acc, value) => acc + value.quantity * value.product.price, 0)
+    scan((acc, value) => acc + value.quantity * value.product.price, 0),
   );
 
   constructor(private readonly cartFacade: CartFacade) {}

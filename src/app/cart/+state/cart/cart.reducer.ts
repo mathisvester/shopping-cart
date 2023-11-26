@@ -21,7 +21,7 @@ export const cartFeature = createFeature({
       return {
         ...state,
         cartItems: state.cartItems.filter(
-          (cartItem) => cartItem.product.id !== action.productId
+          (cartItem) => cartItem.product.id !== action.productId,
         ),
       };
     }),
@@ -36,6 +36,6 @@ export const cartFeature = createFeature({
           }
         }),
       };
-    })
+    }),
   ),
 });

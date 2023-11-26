@@ -44,12 +44,12 @@ export class ProductListItemComponent {
     this.quantity$ = this.cartFacade.cartItems$.pipe(
       map((cartItems) => {
         const cartItem = cartItems.find(
-          (cartItem) => cartItem.product.id === this.product?.id
+          (cartItem) => cartItem.product.id === this.product?.id,
         );
 
         return cartItem?.quantity ?? 0;
       }),
-      startWith(0)
+      startWith(0),
     );
   }
 }

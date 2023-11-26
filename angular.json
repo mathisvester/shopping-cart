@@ -61,10 +61,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "shopping-cart:build:production"
+              "buildTarget": "shopping-cart:build:production"
             },
             "development": {
-              "browserTarget": "shopping-cart:build:development"
+              "buildTarget": "shopping-cart:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -72,7 +72,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "shopping-cart:build"
+            "buildTarget": "shopping-cart:build"
           }
         },
         "test": {

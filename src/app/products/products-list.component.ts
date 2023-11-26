@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { iif, map, Observable, startWith, switchMap } from 'rxjs';
+import { iif, Observable, startWith, switchMap } from 'rxjs';
 import { Product, ProductsApiService } from './_services/products-api.service';
 import { Category, CategoryApiService } from './_services/category-api.service';
 import {
@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { CartFacade } from '../cart/_facades/cart.facade';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -51,9 +51,9 @@ export class ProductsListComponent {
         iif(
           () => selectedCategory.length === 0,
           this.productsApiService.getProducts(),
-          this.productsApiService.getProductsByCategory(selectedCategory)
-        )
-      )
+          this.productsApiService.getProductsByCategory(selectedCategory),
+        ),
+      ),
     );
 
   readonly cartItemsCounter$ = this.cartFacade.cartItemsCounter$;
@@ -62,7 +62,7 @@ export class ProductsListComponent {
     private readonly fb: FormBuilder,
     private readonly productsApiService: ProductsApiService,
     private readonly categoryApiService: CategoryApiService,
-    private readonly cartFacade: CartFacade
+    private readonly cartFacade: CartFacade,
   ) {}
 
   add(product: Product) {

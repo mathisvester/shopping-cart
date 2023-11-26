@@ -17,9 +17,9 @@ export class CategoryApiService {
       .get<string[]>('https://fakestoreapi.com/products/categories')
       .pipe(
         map((categories) =>
-          categories.map((category) => ({ title: category } as Category))
+          categories.map((category) => ({ title: category }) as Category),
         ),
-        catchError(() => of([]))
+        catchError(() => of([])),
       );
   }
 }

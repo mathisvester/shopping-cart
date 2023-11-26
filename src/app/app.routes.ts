@@ -15,7 +15,7 @@ export const APP_ROUTES: Routes = [
     path: 'products',
     loadComponent: () =>
       import('./products/products-list.component').then(
-        (m) => m.ProductsListComponent
+        (m) => m.ProductsListComponent,
       ),
   },
   {

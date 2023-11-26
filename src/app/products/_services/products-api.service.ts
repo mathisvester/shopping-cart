@@ -30,7 +30,7 @@ export class ProductsApiService {
   getProductsByCategory(categoryTitle: string): Observable<Product[]> {
     return this.httpClient
       .get<Product[]>(
-        `https://fakestoreapi.com/products/category/${categoryTitle}`
+        `https://fakestoreapi.com/products/category/${categoryTitle}`,
       )
       .pipe(catchError(() => of([])));
   }
