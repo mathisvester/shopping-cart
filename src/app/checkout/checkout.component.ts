@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
-import { mergeAll, Observable, scan, shareReplay } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Signal,
+} from '@angular/core';
 import { CartItem } from '../cart/_models/cart-item.model';
 import { CartFacade } from '../cart/_facades/cart.facade';
-import { NgIf, NgFor, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-checkout',
@@ -14,23 +19,25 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./checkout.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
     NgFor,
-    AsyncPipe,
     CurrencyPipe,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
     RouterLink,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutComponent {
-  readonly cartItems$: Observable<CartItem[]> = this.cartFacade.cartItems$.pipe(
-    shareReplay({ refCount: true, bufferSize: 1 }),
+  readonly cartItems: Signal<CartItem[]> = toSignal(
+    this.cartFacade.cartItems$,
+    { initialValue: [] },
   );
-  readonly totalCosts$: Observable<number> = this.cartItems$.pipe(
-    mergeAll(),
-    scan((acc, value) => acc + value.quantity * value.product.price, 0),
+  readonly totalCosts: Signal<number> = computed(() =>
+    this.cartItems().reduce(
+      (acc, value) => acc + value.quantity * value.product.price,
+      0,
+    ),
   );
 
   constructor(private readonly cartFacade: CartFacade) {}

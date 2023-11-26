@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,6 +7,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [RouterOutlet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   title = 'shopping-cart';

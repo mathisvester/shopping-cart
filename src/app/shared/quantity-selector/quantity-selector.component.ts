@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -8,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./quantity-selector.component.scss'],
   standalone: true,
   imports: [MatButtonModule, MatIconModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuantitySelectorComponent {
   @Input() quantity!: number;

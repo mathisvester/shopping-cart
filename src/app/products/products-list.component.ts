@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { iif, Observable, startWith, switchMap } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { iif, Observable, switchMap } from 'rxjs';
 import { Product, ProductsApiService } from './_services/products-api.service';
 import { Category, CategoryApiService } from './_services/category-api.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CartFacade } from '../cart/_facades/cart.facade';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { AsyncPipe, NgFor } from '@angular/common';
@@ -17,6 +17,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-products-list',
@@ -25,7 +26,6 @@ import { MatSelectModule } from '@angular/material/select';
   standalone: true,
   imports: [
     RouterLink,
-    ReactiveFormsModule,
     NgFor,
     ProductListItemComponent,
     AsyncPipe,
@@ -34,32 +34,28 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
+    FormsModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListComponent {
-  readonly filter: FormGroup<{ category: FormControl<string> }> =
-    this.fb.nonNullable.group({
-      category: [''],
-    });
+  readonly category: WritableSignal<string> = signal('');
 
   readonly categories$: Observable<Category[]> =
     this.categoryApiService.getCategories();
-  readonly products$: Observable<Product[]> =
-    this.filter.controls.category.valueChanges.pipe(
-      startWith(this.filter.controls.category.value),
-      switchMap((selectedCategory) =>
-        iif(
-          () => selectedCategory.length === 0,
-          this.productsApiService.getProducts(),
-          this.productsApiService.getProductsByCategory(selectedCategory),
-        ),
+  readonly products$: Observable<Product[]> = toObservable(this.category).pipe(
+    switchMap((selectedCategory) =>
+      iif(
+        () => selectedCategory.length === 0,
+        this.productsApiService.getProducts(),
+        this.productsApiService.getProductsByCategory(selectedCategory),
       ),
-    );
+    ),
+  );
 
   readonly cartItemsCounter$ = this.cartFacade.cartItemsCounter$;
 
   constructor(
-    private readonly fb: FormBuilder,
     private readonly productsApiService: ProductsApiService,
     private readonly categoryApiService: CategoryApiService,
     private readonly cartFacade: CartFacade,
@@ -71,5 +67,9 @@ export class ProductsListComponent {
 
   update(productId: number, quantity: number) {
     this.cartFacade.updateCartItemQuantity(productId, quantity);
+  }
+
+  categoryChange(category: string) {
+    this.category.set(category);
   }
 }

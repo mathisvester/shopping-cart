@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItem } from './_models/cart-item.model';
 import { CartFacade } from './_facades/cart.facade';
@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatIconModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent {
   readonly cartItems$: Observable<CartItem[]> = this.cartFacade.cartItems$;

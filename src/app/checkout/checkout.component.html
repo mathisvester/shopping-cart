@@ -6,8 +6,8 @@
 </mat-toolbar>
 
 <main>
-  <dl *ngIf="cartItems$ | async as cartItems">
-    <ng-container *ngFor="let cartItem of cartItems">
+  <dl>
+    <ng-container *ngFor="let cartItem of cartItems()">
       <dt>{{ cartItem.quantity }}x {{ cartItem.product.title }}</dt>
       <dd>
         {{ cartItem.quantity * cartItem.product.price | currency }}
@@ -15,7 +15,7 @@
     </ng-container>
     <dt><b>Total</b></dt>
     <dd>
-      <b>{{ totalCosts$ | async | currency }}</b>
+      <b>{{ totalCosts() | currency }}</b>
     </dd>
   </dl>
   <button mat-button>Confirm</button>

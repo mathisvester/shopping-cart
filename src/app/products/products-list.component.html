@@ -12,10 +12,14 @@
 </mat-toolbar>
 
 <main>
-  <form [formGroup]="filter">
+  <form>
     <mat-form-field>
       <mat-label>Select category</mat-label>
-      <mat-select formControlName="category">
+      <mat-select
+        [ngModel]="category()"
+        (ngModelChange)="categoryChange($event)"
+        name="category"
+      >
         <mat-option [value]="''">All</mat-option>
         <mat-option
           *ngFor="let category of categories$ | async"
@@ -32,5 +36,5 @@
     [product]="product"
     (add)="add($event)"
     (quantityChange)="update(product.id, $event)"
-  ></app-product-list-item>
+  />
 </main>

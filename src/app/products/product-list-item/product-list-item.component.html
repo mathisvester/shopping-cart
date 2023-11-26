@@ -13,7 +13,7 @@
       *ngIf="quantity$ | async as quantity; else addButton"
       [quantity]="quantity"
       (quantityChange)="quantityChange.emit($event)"
-    ></app-quantity-selector>
+    />
 
     <ng-template #addButton>
       <button mat-button (click)="add.emit(product)">Add</button>

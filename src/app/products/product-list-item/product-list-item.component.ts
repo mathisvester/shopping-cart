@@ -1,9 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Product } from '../_services/products-api.service';
-import { map, Observable, startWith, Subject } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import { CartFacade } from '../../cart/_facades/cart.facade';
 import { QuantitySelectorComponent } from '../../shared/quantity-selector/quantity-selector.component';
-import { NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -20,14 +26,11 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatButtonModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListItemComponent {
   @Input() set product(product: Product | undefined) {
     this._product = product;
-
-    if (this._product?.id) {
-      this.loadQuantity$.next(this._product.id);
-    }
   }
   get product(): Product | undefined {
     return this._product;
@@ -37,7 +40,6 @@ export class ProductListItemComponent {
 
   readonly quantity$: Observable<number>;
 
-  private readonly loadQuantity$: Subject<number> = new Subject<number>();
   private _product: Product | undefined;
 
   constructor(private readonly cartFacade: CartFacade) {
